@@ -222,9 +222,10 @@ namespace rxfind {
         private static void DisplayHelp() {
             Console.WriteLine(
                 "Performs a search and/or replace in a directory.\r\n\r\n" +
-                "RXFIND [drive:][path]filename [/S] [/F] [/I] [/B:0|1|2] [/SL] [/O] [/Q] /P:[searchpattern] [/R:replacestring]\r\n\r\n" +
+                "RXFIND [drive:][path]filename [/S] [/F] [/LN] [/I] [/B:0|1|2] [/SL] [/O] [/Q]\r\n" +
+                "  /P:[searchpattern] [/R:replacestring]\r\n\r\n" +
                 "  [drive:][path]filename\r\n" +
-                "              Specifies drive, directory, and files to list.\r\n\r\n" +
+                "              Specifies drive, directory, and file(s) to list.\r\n\r\n" +
                 "  /?          Displays this help file.\r\n" +
                 "  /S          Search this directory and all subdirectories \r\n" +
                 "  /P          Regex search pattern\r\n" +
