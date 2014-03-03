@@ -5,8 +5,8 @@ RxFind is a Windows command line tool allowing you to search (and replace) the
 content of files using Regular Expressions written in C# for .NET framework 2.0.
 
 ## Authors
-Original author: [Joel Thoms](http://joel.net)
-Line number patch: [Bartizan](http://www.codeplex.com/site/users/view/Bartizan)
+- Original author: [Joel Thoms](http://joel.net)
+- Line number patch: [Bartizan](http://www.codeplex.com/site/users/view/Bartizan)
 
 ## Features
 
@@ -18,7 +18,9 @@ Line number patch: [Bartizan](http://www.codeplex.com/site/users/view/Bartizan)
   `RxFind code\*.cs /s /p:"Joel Thoms"` will search for the text "Joel Thoms"
   in all .cs files in the code directory.
 - Regex Replace - Regular Expression replace gives you access to the match
-  patern data.
+  patern data. `RxFind test.txt /p:"Full Name: (?<first>\w+) (?<last>\w+)"
+  /r:"Full Name: ${last}, ${first}"` will rewrite lines in test.txt from:
+  "Full Name: Joel Thoms" to: "Full Name: Thoms, Joel".
 - .Bak Files - Can create a .bak file of the original (just incase you mess
   something up)
 
