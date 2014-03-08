@@ -7,47 +7,57 @@ content of files using Regular Expressions written in C# for .NET framework 2.0.
 ## Authors
 - Original author: [Joel Thoms](http://joel.net)
 - Line number patch: [Bartizan](http://www.codeplex.com/site/users/view/Bartizan)
+- Recent changes: [Blake Mitchell](https://github.com/kalahari)
 
 ## Features
 
-- Command Line Interface - Perfect for all your scripting and administration
+- __Command Line Interface__: Perfect for all your scripting and administration
   needs.
-- Regular Expressions - That's right -- Regular Expressions. The most powerful
+- __Regular Expressions__: That's right -- Regular Expressions. The most powerful
   way to search.
-- Search Multiple Files - Can even traverse subdirectories.
+- __Search Multiple Files__: Can even traverse subdirectories.
   `RxFind code\*.cs /s /p:"Joel Thoms"` will search for the text "Joel Thoms"
-  in all .cs files in the code directory.
-- Regex Replace - Regular Expression replace gives you access to the match
+  in all .cs files under the code directory.
+- __Regex Replace__: Regular Expression replace gives you access to the match
   patern data. `RxFind test.txt /p:"Full Name: (?<first>\w+) (?<last>\w+)"
   /r:"Full Name: ${last}, ${first}"` will rewrite lines in test.txt from:
   "Full Name: Joel Thoms" to: "Full Name: Thoms, Joel".
-- .Bak Files - Can create a .bak file of the original (just incase you mess
+- __.Bak Files__: Can create a .bak file of the original (just incase you mess
   something up)
 
 ## Options
 ```
 C:\>RxFind.exe /?
-Performs a search and/or replace in a directory.
+RxFind version: 0.9.8
 
-RXFIND [drive:][path]filename [/S] [/F] [/LN] [/I] [/B:0|1|2] [/SL] [/O] [/Q]
-  /P:[searchpattern] [/R:replacestring]
+Performs a regular expression search, and optional replace,
+across the specified files.
 
-  [drive:][path]filename
-              Specifies drive, directory, and file(s) to search.
+RXFIND [drive:][path]file
+  [/S] [/F] [/LN] [/FL] [/I] [/B:0|1|2] [/SL] [/O] [/Q]
+  [/DQ:doublequotetoken] (/P:searchpattern)|(/PV:searchpatternvariable)
+  [/R:replacementstring]|[/RV:replacementstringvariable]
 
-  /?          Displays this help file.
-  /S          Search this directory and all subdirectories
-  /P          Regex search pattern
-  /R          Replacement string
-  /I          Ignore case
-  /SL         Single line pattern matching
-  /F          Includes the filename in console output
-  /LN         Includes the line number in console output
-  /B:0        if .bak file exists no replace will be performed. (default)
-  /B:1        if .bak file exists, it is overwritten
-  /B:2        No .bak file is created
-  /O          Console output only.  File is not modified.
-  /Q          Quiet operation - No results output to console
+  [drive:][path]file
+         Specifies drive, directory, and file(s) to search
+
+  /?     Displays this help text.
+  /S     Search recursively through subdirectories.
+  /DQ    A substitue for "" in search and replace strings.
+  /P     Regex search pattern.
+  /PV    Name of environment variable containing rexgex search pattern.
+  /R     Replacement string.
+  /RV    Name of environment variable containing replacement string.
+  /I     Ignore case when matching.
+  /SL    Single line pattern matching.
+  /F     Includes the filename in console output.
+  /LN    Includes the line number in console output.
+  /FL    Console output is only the matching directory and file names.
+  /B:0   If .bak file exists, no replace will be performed. (default)
+  /B:1   If .bak file exists, it is overwritten.
+  /B:2   No .bak file is created.
+  /O     Console output only, no files are modified
+  /Q     Quiet operation, no results output to console");
 ```
 
 ## Warning
