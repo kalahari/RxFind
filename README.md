@@ -28,12 +28,12 @@ content of files using Regular Expressions written in C# for .NET framework 2.0.
 ## Options
 ```
 C:\>RxFind.exe /?
-RxFind version: 0.9.8
+RxFind version: 0.9.9
 
 Performs a regular expression search, and optional replace,
 across the specified files.
 
-RXFIND [drive:][path]file
+RXFIND [drive:][path]file [[drive:][path]file2]...[drive:][path]fileN]]
   [/S] [/F] [/LN] [/FL] [/I] [/B:0|1|2] [/SL] [/O] [/Q]
   [/DQ:doublequotetoken] (/P:searchpattern)|(/PV:searchpatternvariable)
   [/R:replacementstring]|[/RV:replacementstringvariable]

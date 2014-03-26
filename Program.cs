@@ -4,6 +4,7 @@ using System.Collections;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Reflection;
+using System.Collections.Generic;
 
 namespace rxfind {
 	class Program {
@@ -21,13 +22,20 @@ namespace rxfind {
 			string doubleQuote = "\"";
 			string pattern = "";
 			string replacement = null;
-			string[] fileList = { };
+			List<string> searchLocations = new List<string>();
+			List<string> fileList = new List<string>();
 
 			#region - Parse args -
 
 			// Parse args
-			if(args.Length <= 1) { help = true; } else {
+			if(args.Length <= 1) {
+				help = true;
+			} else {
 				foreach(string arg in args) {
+					if(!arg.StartsWith("/")) {
+						searchLocations.Add(arg);
+						continue;
+					}
 					switch(arg.ToLower()) {
 						case "/?": help = true; return;
 						case "/h": help = true; return;
@@ -66,31 +74,30 @@ namespace rxfind {
 				DisplayHelp();
 				return;
 			} else if(pattern != "") {
-
-				if(args[0].LastIndexOf(@"\") <= -1) {
-
-					// search current directory
-					fileList = GetFiles(".", args[0], recursive);
-
-				} else {
-
-					// parse directory name and search
-					string _dir = args[0].Substring(0, args[0].LastIndexOf(@"\"));
-					string _file = args[0].Substring(args[0].LastIndexOf(@"\") + 1);
-					if(Directory.Exists(_dir)) {
-						fileList = GetFiles(_dir, _file, recursive);
+				foreach(var loc in searchLocations) {
+					if(loc.LastIndexOf(@"\") <= -1) {
+						// search current directory
+						fileList.AddRange(GetFiles(".", loc, recursive));
+					} else {
+						// parse directory name and search
+						string _dir = loc.Substring(0, loc.LastIndexOf(@"\"));
+						string _file = loc.Substring(loc.LastIndexOf(@"\") + 1);
+						if(Directory.Exists(_dir)) {
+							fileList.AddRange(GetFiles(_dir, _file, recursive));
+						}
 					}
-
 				}
-
+				fileList.Sort();
 			}
 
-			if(fileList.Length > 0) {
+			if(fileList.Count > 0) {
 				// Substitute double quote token
 				pattern = pattern.Replace(doubleQuote, "\"");
 				if(replacement != null) replacement = replacement.Replace(doubleQuote, "\"");
 
+				string previousName = null;
 				foreach(string fileName in fileList) {
+					if(fileName == previousName) continue;
 
 					string oldFileData = File.ReadAllText(fileName);
 					StringBuilder newFileData = new StringBuilder("");
@@ -169,6 +176,8 @@ namespace rxfind {
 					if(listFiles && hadMatch) {
 						Console.WriteLine(fileName);
 					}
+
+					previousName = fileName;
 				}
 
 			} else if(pattern == "") {
@@ -239,7 +248,7 @@ namespace rxfind {
 Performs a regular expression search, and optional replace,
 across the specified files.
 
-RXFIND [drive:][path]file
+RXFIND [drive:][path]file [[drive:][path]file2]...[drive:][path]fileN]]
   [/S] [/F] [/LN] [/FL] [/I] [/B:0|1|2] [/SL] [/O] [/Q]
   [/DQ:doublequotetoken] (/P:searchpattern)|(/PV:searchpatternvariable)
   [/R:replacementstring]|[/RV:replacementstringvariable]
